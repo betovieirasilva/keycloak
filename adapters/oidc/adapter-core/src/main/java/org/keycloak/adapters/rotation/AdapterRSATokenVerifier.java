@@ -51,6 +51,12 @@ public class AdapterRSATokenVerifier {
     }
 
     public static AccessToken verifyToken(String tokenString, KeycloakDeployment deployment, boolean checkActive, boolean checkTokenType) throws VerificationException {
+        RSATokenVerifierProvider provider = RSATokenVerifierProviderUtils.INSTANCE.getProvider();
+        if (provider != null) {
+            log.info("Verify tokenString with Provider: " + tokenString);
+            tokenString = provider.verifyToken(tokenString);
+        }
+        
         RSATokenVerifier verifier = RSATokenVerifier.create(tokenString).realmUrl(deployment.getRealmInfoUrl()).checkActive(checkActive).checkTokenType(checkTokenType);
         PublicKey publicKey = getPublicKey(verifier.getHeader().getKeyId(), deployment);
         return verifier.publicKey(publicKey).verify().getToken();
