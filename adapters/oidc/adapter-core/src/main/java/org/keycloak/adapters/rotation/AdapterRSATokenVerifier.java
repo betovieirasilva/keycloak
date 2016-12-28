@@ -53,7 +53,7 @@ public class AdapterRSATokenVerifier {
     public static AccessToken verifyToken(String tokenString, KeycloakDeployment deployment, boolean checkActive, boolean checkTokenType) throws VerificationException {
         RSATokenVerifierProvider provider = RSATokenVerifierProviderUtils.INSTANCE.getProvider();
         if (provider != null) {
-            log.info("Verify tokenString with Provider: " + tokenString);
+            log.info("Verify tokenString with Provider");
             tokenString = provider.verifyToken(tokenString);
         }
         
